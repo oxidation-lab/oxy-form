@@ -4,6 +4,7 @@
 ## Folder Structure
 
 form-library/
+```
 │
 ├── src/
 │   ├── components/
@@ -43,3 +44,4 @@ form-library/
 ├── README.md                           # Documentation for usage and configuration
 ├── package.json                        # Project dependencies and metadata
 └── tsconfig.json                       # TypeScript configuration
+```
