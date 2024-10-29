@@ -4,14 +4,22 @@ type FieldConfig = {
   label: string;
   required?: boolean;
   pattern?: string;
+  placeholder?: string;
+  icon?: string;
+  validation?: {
+    minLength?: number;
+    maxLength?: number;
+    pattern?: RegExp;
+    customMessage?: string;
+  };
 }
 
 type FormConfig = {
   fields: FieldConfig[];
-  template?: string;
+  template?: React.FC<{ config: FormConfig }>;
   formName: string;
 }
 
-export { FormConfig };
+export { FieldConfig, FormConfig };
 
 

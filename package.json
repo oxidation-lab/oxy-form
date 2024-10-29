@@ -1,17 +1,25 @@
 {
-  "name": "oxy-form",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@types/node": "^22.8.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.6.3"
-  }
+	"name": "oxy-form",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"test:dev": "vite"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"@types/node": "^22.8.1",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.6.3"
+	},
+	"devDependencies": {
+		"@types/react": "^18.3.12",
+		"@types/react-dom": "^18.3.1",
+		"@vitejs/plugin-react": "^4.3.3",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"vite": "^5.4.10"
+	}
 }
