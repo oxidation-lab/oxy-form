@@ -5,6 +5,13 @@ type FieldConfig = {
   required?: boolean;
   pattern?: string;
   placeholder?: string;
+  icon?: string;
+  validation?: {
+    minLength?: number;
+    maxLength?: number;
+    pattern?: RegExp;
+    customMessage?: string;
+  };
 }
 
 type FormConfig = {
@@ -13,6 +20,6 @@ type FormConfig = {
   formName: string;
 }
 
-export { FormConfig };
+export { FieldConfig, FormConfig };
 
 
