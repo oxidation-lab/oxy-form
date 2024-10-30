@@ -1,3 +1,12 @@
+type FieldValidation = {
+  minLength?: number;
+  maxLength?: number;
+  pattern?: RegExp;
+  customMessage?: string;
+  minValue?: number;
+  maxValue?: number;
+};
+
 type FieldConfig = {
   name: string;
   type: string;
@@ -6,20 +15,13 @@ type FieldConfig = {
   pattern?: string;
   placeholder?: string;
   icon?: string;
-  validation?: {
-    minLength?: number;
-    maxLength?: number;
-    pattern?: RegExp;
-    customMessage?: string;
-  };
-}
+  validation?: FieldValidation;
+};
 
 type FormConfig = {
   fields: FieldConfig[];
   template?: React.FC<{ config: FormConfig }>;
   formName: string;
-}
+};
 
-export { FieldConfig, FormConfig };
-
-
+export { FieldConfig, FieldValidation, FormConfig };
