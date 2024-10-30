@@ -15,47 +15,56 @@ const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
     setErrors({ ...errors, [name]: "" });
   };
 
+  const validateField = (field: any, value: string) => {
+    const fieldErrors: string[] = [];
+
+    // Check for required fields
+    if (field.required && !value) {
+      fieldErrors.push(`${field.label} is required`);
+    }
+
+    // Check pattern validation
+    if (field.validation?.pattern && !field.validation.pattern.test(value)) {
+      fieldErrors.push(field.validation.customMessage || `${field.label} is invalid`);
+    }
+
+    // Check minLength
+    if (field.validation?.minLength && value.length < field.validation.minLength) {
+      fieldErrors.push(field.validation.customMessage || `${field.label} is too short`);
+    }
+
+    // Check maxLength
+    if (field.validation?.maxLength && value.length > field.validation.maxLength) {
+      fieldErrors.push(field.validation.customMessage || `${field.label} is too long`);
+    }
+
+    // Special case for number type
+    if (field.type === "number" && isNaN(Number(value))) {
+      fieldErrors.push(`${field.label} must be a number`);
+    }
+
+    // Additional checks for number type
+    if (field.type === "number") {
+      if (field.validation?.minValue !== undefined && Number(value) < field.validation.minValue) {
+        fieldErrors.push(`${field.label} should be at least ${field.validation.minValue}`);
+      }
+      if (field.validation?.maxValue !== undefined && Number(value) > field.validation.maxValue) {
+        fieldErrors.push(`${field.label} should be no more than ${field.validation.maxValue}`);
+      }
+    }
+
+    return fieldErrors;
+  };
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
     config.fields.forEach((field) => {
       const value = formData[field.name] || "";
+      const fieldErrors = validateField(field, value);
 
-      if (field.required && !value) {
-        newErrors[field.name] = `${field.label} is required`;
-        return;
-      }
-
-      switch (field.type) {
-        case "email":
-          if (field.validation?.pattern && !field.validation.pattern.test(value)) {
-            newErrors[field.name] = field.validation.customMessage || `${field.label} is invalid`;
-          }
-          break;
-        case "password":
-          if (field.validation?.minLength && value.length < field.validation.minLength) {
-            newErrors[field.name] = field.validation.customMessage || `${field.label} is too short`;
-          }
-          break;
-        case "number":
-          if (isNaN(Number(value))) {
-            newErrors[field.name] = `${field.label} must be a number`;
-          }
-          if (field.validation?.minValue !== undefined && Number(value) < field.validation.minValue) {
-            newErrors[field.name] = `${field.label} should be at least ${field.validation.minValue}`;
-          }
-          if (field.validation?.maxValue !== undefined && Number(value) > field.validation.maxValue) {
-            newErrors[field.name] = `${field.label} should be no more than ${field.validation.maxValue}`;
-          }
-          break;
-        default:
-          if (field.validation?.minLength && value.length < field.validation.minLength) {
-            newErrors[field.name] = field.validation.customMessage || `${field.label} is too short`;
-          }
-          if (field.validation?.pattern && !field.validation.pattern.test(value)) {
-            newErrors[field.name] = field.validation.customMessage || `${field.label} is invalid`;
-          }
-          break;
+      if (fieldErrors.length > 0) {
+        newErrors[field.name] = fieldErrors.join(' ');
       }
     });
 
@@ -78,10 +87,7 @@ const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
         <h2 className="text-lg font-semibold text-center mb-4">{config.formName}</h2>
         {config.fields.map((field, index) => (
           <div className="mb-4" key={index}>
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor={field.name}
-            >
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={field.name}>
               {field.label}
             </label>
             <input
