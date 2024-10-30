@@ -23,15 +23,39 @@ const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
 
       if (field.required && !value) {
         newErrors[field.name] = `${field.label} is required`;
+        return;
       }
 
-      if (field.validation) {
-        if (field.validation.minLength && value.length < field.validation.minLength) {
-          newErrors[field.name] = field.validation.customMessage || `${field.label} is too short`;
-        }
-        if (field.validation.pattern && !field.validation.pattern.test(value)) {
-          newErrors[field.name] = field.validation.customMessage || `${field.label} is invalid`;
-        }
+      switch (field.type) {
+        case "email":
+          if (field.validation?.pattern && !field.validation.pattern.test(value)) {
+            newErrors[field.name] = field.validation.customMessage || `${field.label} is invalid`;
+          }
+          break;
+        case "password":
+          if (field.validation?.minLength && value.length < field.validation.minLength) {
+            newErrors[field.name] = field.validation.customMessage || `${field.label} is too short`;
+          }
+          break;
+        case "number":
+          if (isNaN(Number(value))) {
+            newErrors[field.name] = `${field.label} must be a number`;
+          }
+          if (field.validation?.minValue !== undefined && Number(value) < field.validation.minValue) {
+            newErrors[field.name] = `${field.label} should be at least ${field.validation.minValue}`;
+          }
+          if (field.validation?.maxValue !== undefined && Number(value) > field.validation.maxValue) {
+            newErrors[field.name] = `${field.label} should be no more than ${field.validation.maxValue}`;
+          }
+          break;
+        default:
+          if (field.validation?.minLength && value.length < field.validation.minLength) {
+            newErrors[field.name] = field.validation.customMessage || `${field.label} is too short`;
+          }
+          if (field.validation?.pattern && !field.validation.pattern.test(value)) {
+            newErrors[field.name] = field.validation.customMessage || `${field.label} is invalid`;
+          }
+          break;
       }
     });
 
@@ -51,7 +75,7 @@ const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
   return (
     <div className="w-full max-w-xs mx-auto">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
-        <h2 className="text-lg font-semibold mb-4">{config.formName}</h2>
+        <h2 className="text-lg font-semibold text-center mb-4">{config.formName}</h2>
         {config.fields.map((field, index) => (
           <div className="mb-4" key={index}>
             <label
@@ -84,9 +108,6 @@ const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
           </button>
         </div>
       </form>
-      <p className="text-center text-gray-500 text-xs">
-        &copy;{new Date().getFullYear()} Your Company. All rights reserved.
-      </p>
     </div>
   );
 };
