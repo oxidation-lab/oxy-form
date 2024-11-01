@@ -2,8 +2,10 @@ import ReactDOM from "react-dom/client";
 import FormRenderer from "../src/components/FormRenderer";
 import { FormConfig } from "../src/types/form.types";
 
+
+
 const formConfig: FormConfig = {
-  formName: "Sample Form",
+  formName: "Multi-Category Radio Form",
   fields: [
     {
       name: "username",
@@ -17,28 +19,22 @@ const formConfig: FormConfig = {
       },
     },
     {
-      name: "age",
-      type: "number",
-      label: "Age",
-      required: true,
-      placeholder: "Enter your age",
-      validation: {
-        minValue: 18,
-        maxValue: 99,
-      },
-    },
-    {
-      name: "gender",
+      name: "preferences",
+      label: "Preferences",
       type: "radio",
-      label: "Gender",
       required: true,
-      options: ["Male", "Female", "Other"],
-    },
-    {
-      name: "hobbies",
-      type: "checkbox",
-      label: "Hobbies",
-      options: ["Reading", "Traveling", "Cooking", "Sports"],
+      groups: [
+        {
+          name: "operatingSystem",
+          options: ["Windows", "macOS", "Linux"],
+          layout: "inline",
+        },
+        {
+          name: "languageProficiency",
+          options: ["Beginner", "Intermediate", "Advanced"],
+          layout: "newline",
+        },
+      ],
     },
     {
       name: "email",
@@ -53,11 +49,30 @@ const formConfig: FormConfig = {
     },
   ],
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const App = () => (
   <div style={{ padding: "20px" }}>
     <FormRenderer config={formConfig} />
   </div>
 );
+
 
 const rootElement = document.getElementById("root");
 if (rootElement) {

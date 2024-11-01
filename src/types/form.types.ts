@@ -7,14 +7,21 @@ type FieldValidation = {
   maxValue?: number;
 };
 
+type RadioGroup = {
+  options: string[];
+  layout: "inline" | "newline";
+  name: string;
+};
+
 type FieldConfig = {
+  label: string;
   name: string;
   type: string;
-  label: string;
   required?: boolean;
   placeholder?: string;
-  options?: string[];
+  icon?: string;
   validation?: FieldValidation;
+  groups?: RadioGroup[];
 };
 
 type FormConfig = {
@@ -23,4 +30,4 @@ type FormConfig = {
   formName: string;
 };
 
-export { FieldConfig, FieldValidation, FormConfig };
+export { FieldConfig, FieldValidation, FormConfig, RadioGroup };
