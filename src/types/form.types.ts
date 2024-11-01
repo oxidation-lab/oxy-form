@@ -12,9 +12,8 @@ type FieldConfig = {
   type: string;
   label: string;
   required?: boolean;
-  pattern?: string;
   placeholder?: string;
-  icon?: string;
+  options?: string[];
   validation?: FieldValidation;
 };
 

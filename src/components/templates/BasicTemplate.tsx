@@ -1,49 +1,54 @@
 import React, { useState } from 'react';
-import { FormConfig } from '../../types/form.types';
+import { FieldConfig, FormConfig } from '../../types/form.types';
 
 interface TemplateProps {
   config: FormConfig;
 }
 
 const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
-  const [formData, setFormData] = useState<Record<string, string>>({});
+  const [formData, setFormData] = useState<Record<string, any>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type, checked } = e.target;
+
+    if (type === 'checkbox') {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: checked ? [...(prevData[name] || []), value] : (prevData[name] || []).filter((v: string) => v !== value),
+      }));
+    } else if (type === 'radio') {
+      setFormData({ ...formData, [name]: value });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+
     setErrors({ ...errors, [name]: "" });
   };
 
-  const validateField = (field: any, value: string) => {
+  const validateField = (field: FieldConfig, value: any) => {
     const fieldErrors: string[] = [];
 
-    // Check for required fields
     if (field.required && !value) {
       fieldErrors.push(`${field.label} is required`);
     }
 
-    // Check pattern validation
     if (field.validation?.pattern && !field.validation.pattern.test(value)) {
       fieldErrors.push(field.validation.customMessage || `${field.label} is invalid`);
     }
 
-    // Check minLength
     if (field.validation?.minLength && value.length < field.validation.minLength) {
       fieldErrors.push(field.validation.customMessage || `${field.label} is too short`);
     }
 
-    // Check maxLength
     if (field.validation?.maxLength && value.length > field.validation.maxLength) {
       fieldErrors.push(field.validation.customMessage || `${field.label} is too long`);
     }
 
-    // Special case for number type
     if (field.type === "number" && isNaN(Number(value))) {
       fieldErrors.push(`${field.label} must be a number`);
     }
 
-    // Additional checks for number type
     if (field.type === "number") {
       if (field.validation?.minValue !== undefined && Number(value) < field.validation.minValue) {
         fieldErrors.push(`${field.label} should be at least ${field.validation.minValue}`);
@@ -90,16 +95,44 @@ const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={field.name}>
               {field.label}
             </label>
-            <input
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors[field.name] ? 'border-red-500' : ''}`}
-              type={field.type}
-              id={field.name}
-              name={field.name}
-              required={field.required}
-              placeholder={field.placeholder || ""}
-              value={formData[field.name] || ""}
-              onChange={handleChange}
-            />
+            {field.type === 'radio' && field.options ? (
+              field.options.map((option) => (
+                <label key={option} className="block">
+                  <input
+                    type="radio"
+                    name={field.name}
+                    value={option}
+                    checked={formData[field.name] === option}
+                    onChange={handleChange}
+                  />{' '}
+                  {option}
+                </label>
+              ))
+            ) : field.type === 'checkbox' && field.options ? (
+              field.options.map((option) => (
+                <label key={option} className="block">
+                  <input
+                    type="checkbox"
+                    name={field.name}
+                    value={option}
+                    checked={(formData[field.name] || []).includes(option)}
+                    onChange={handleChange}
+                  />{' '}
+                  {option}
+                </label>
+              ))
+            ) : (
+              <input
+                className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors[field.name] ? 'border-red-500' : ''}`}
+                type={field.type}
+                id={field.name}
+                name={field.name}
+                required={field.required}
+                placeholder={field.placeholder || ""}
+                value={formData[field.name] || ""}
+                onChange={handleChange}
+              />
+            )}
             {errors[field.name] && (
               <p className="text-red-500 text-xs italic">{errors[field.name]}</p>
             )}
