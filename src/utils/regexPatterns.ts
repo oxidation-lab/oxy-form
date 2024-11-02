@@ -29,7 +29,6 @@ const regexPatterns = {
   digitsOnly: (minLength = 1, maxLength = 10) =>
     new RegExp(`^\\d{${minLength},${maxLength}}$`),
 
-  // New pattern for numeric range with optional negative values
   numericRange: (min = -Infinity, max = Infinity, allowNegative = true) => {
     let pattern = '^';
 

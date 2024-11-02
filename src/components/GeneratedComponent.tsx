@@ -1,16 +1,99 @@
 import React, { useState } from 'react';
-import { FieldConfig, FormConfig } from '../../types/form.types';
+
+type FieldValidation = {
+  minLength?: number;
+  maxLength?: number;
+  pattern?: RegExp;
+  customMessage?: string;
+  minValue?: number;
+  maxValue?: number;
+};
+
+type RadioGroup = {
+  options: string[];
+  layout: "inline" | "newline";
+  name: string;
+};
+
+type FieldConfig = {
+  label: string;
+  name: string;
+  type: string;
+  required?: boolean;
+  placeholder?: string;
+  icon?: string;
+  validation?: FieldValidation;
+  groups?: RadioGroup[];
+};
+
+type FormConfig = {
+  fields: FieldConfig[];
+  template?: React.FC<{ config: FormConfig }>;
+  formName: string;
+};
 
 interface TemplateProps {
   config: FormConfig;
 }
 
-const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
+const BasicTemplate: React.FC<TemplateProps> = () => {
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
 
 
-  //FORM_CONFIG_HERE
+  const config = {
+  "formName": "Multi-Category Radio Form",
+  "fields": [
+    {
+      "name": "username",
+      "type": "text",
+      "label": "Username",
+      "required": true,
+      "placeholder": "Enter your username",
+      "validation": {
+        "minLength": 3,
+        "maxLength": 20
+      }
+    },
+    {
+      "name": "preferences",
+      "label": "Preferences",
+      "type": "radio",
+      "required": true,
+      "groups": [
+        {
+          "name": "operatingSystem",
+          "options": [
+            "Windows",
+            "macOS",
+            "Linux"
+          ],
+          "layout": "inline"
+        },
+        {
+          "name": "languageProficiency",
+          "options": [
+            "Beginner",
+            "Intermediate",
+            "Advanced"
+          ],
+          "layout": "newline"
+        }
+      ]
+    },
+    {
+      "name": "email",
+      "type": "text",
+      "label": "Email",
+      "required": true,
+      "placeholder": "Enter your email",
+      "validation": {
+        "pattern": "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/",
+        "customMessage": "Please enter a valid email address"
+      }
+    }
+  ]
+};
 
 
 

@@ -1,8 +1,7 @@
 import ReactDOM from "react-dom/client";
+// @ts-ignore
 import FormRenderer from "../src/components/FormRenderer";
 import { FormConfig } from "../src/types/form.types";
-
-
 
 const formConfig: FormConfig = {
   formName: "Multi-Category Radio Form",
@@ -51,28 +50,12 @@ const formConfig: FormConfig = {
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const App = () => (
   <div style={{ padding: "20px" }}>
+    <h1>Form Renderer</h1>
     <FormRenderer config={formConfig} />
   </div>
 );
-
 
 const rootElement = document.getElementById("root");
 if (rootElement) {
