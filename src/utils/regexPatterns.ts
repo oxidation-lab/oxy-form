@@ -21,6 +21,27 @@ const regexPatterns = {
   postalCode: /^[A-Za-z0-9]{3,10}$/,
 
   url: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i,
+
+
+  alphabetic: (minLength = 1, maxLength = 50, caseSensitive = false) =>
+    new RegExp(`^[a-zA-Z]{${minLength},${maxLength}}$`, caseSensitive ? '' : 'i'),
+
+  digitsOnly: (minLength = 1, maxLength = 10) =>
+    new RegExp(`^\\d{${minLength},${maxLength}}$`),
+
+  numericRange: (min = -Infinity, max = Infinity, allowNegative = true) => {
+    let pattern = '^';
+
+    if (allowNegative && min < 0) pattern += '-?';
+
+    pattern += '\\d+';
+
+    const boundedPattern = new RegExp(pattern);
+    return (value: string) => {
+      const numValue = Number(value);
+      return boundedPattern.test(value) && numValue >= min && numValue <= max;
+    };
+  },
 };
 
 export default regexPatterns;
