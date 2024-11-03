@@ -47,6 +47,11 @@ const formConfig: FormConfig = {
       },
     },
   ],
+  stylingConfig: {
+    language: "ts",
+    styling: "tailwind",
+  },
+  template: "BasicTemplate",
 };
 
 

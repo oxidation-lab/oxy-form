@@ -24,10 +24,17 @@ type FieldConfig = {
   groups?: RadioGroup[];
 };
 
-type FormConfig = {
-  fields: FieldConfig[];
-  template?: React.FC<{ config: FormConfig }>;
-  formName: string;
+type StylingConfig = {
+  language: "js" | "ts";
+  styling: "tailwind" | "inline" | "styled" | "external";
+  cssFilePath?: string;
 };
 
-export { FieldConfig, FieldValidation, FormConfig, RadioGroup };
+type FormConfig = {
+  fields: FieldConfig[];
+  template: string;
+  formName: string;
+  stylingConfig: StylingConfig;
+};
+
+export { FieldConfig, FieldValidation, FormConfig, RadioGroup, StylingConfig };

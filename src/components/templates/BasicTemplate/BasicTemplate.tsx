@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FieldConfig, FormConfig } from '../../types/form.types';
+import { FieldConfig, FormConfig } from '../../../types/form.types';
 
 interface TemplateProps {
   config: FormConfig;
