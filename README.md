@@ -1,28 +1,18 @@
+# 🛠️ Form Renderer
 
+## 📜 Description
 
+oxy-form is a powerful and flexible library designed to dynamically render forms based on JSON configurations. It provides a set of customizable templates, making it easy to create forms that meet your needs without extensive coding. This project aims to streamline the process of form generation, validation, and submission in web applications.
 
-## Folder Structure
+## 🚀 Features
 
-```
-├── src/
-│   ├── components/
-│   │   ├── FormRenderer.tsx           # Main component to render the form based on JSON
-│   │   └── templates/                 # Folder for template-specific styling/components
-│   │       ├── DefaultTemplate.tsx    # Basic template for rendering forms
-│   │       └── CustomTemplate.tsx     # Example of a custom template
-│   ├── generators/
-│   │   ├── jsonGenerator.ts           # Code to generate JSON files for form configurations
-│   │   ├── yamlGenerator.ts           # Code to generate YAML files for form configurations
-│   │   ├── ...
-│   ├── utils/
-│   │   ├── fieldValidators.ts         # Utility for field validation patterns
-│   ├── types/
-│   │   ├── form.types.ts              # TypeScript types for form configurations
-│   ├── index.ts                       # Main export file
-├── tests/                             # Unit tests
-│   ├── jsonGenerator.test.ts          # Tests for JSON generation functionality
-├── .gitignore                         # Ignored files
-├── README.md                          # Documentation
-├── package.json                       # Project dependencies and metadata
-└── tsconfig.json                      # TypeScript configuration
+- **Dynamic Form Rendering**: Render forms using JSON configurations.
+- **Customizable Templates**: Easily switch between different templates to match your application's style.
+- **Field Validation**: Built-in utilities for validating form fields based on patterns.
+- **TypeScript Support**: Strongly typed components and utilities for better development experience.
+
+## 📦 Installation
+
+```bash
+npm install @oxidation-lab/oxy-form
 ```
