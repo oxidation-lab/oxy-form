@@ -41,7 +41,8 @@ const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
 
   return (
     <div className={`form-container ${styling === "tailwind" ? "tailwind-styles" : ""}`}>
-      <TemplateComponent config={config} />
+      {/* @ts-ignore */}
+      <TemplateComponent config={config} styling={styling} />
     </div>
   );
 };

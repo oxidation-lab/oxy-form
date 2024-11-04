@@ -3,10 +3,11 @@ import { FieldConfig, FormConfig } from '../../../types/form.types';
 
 interface TemplateProps {
   config: FormConfig;
+  styling: any;
 }
 
-const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
-  const [formData, setFormData] = useState<Record<string, string>>({});
+const BasicTemplate: React.FC<TemplateProps> = ({ config, styling }) => { //TODO: dont forgot to update the logic of the generatefile function
+  const [formData, setFormData] = useState<Record<string, string | boolean>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
 
 
@@ -76,31 +77,30 @@ const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
     }));
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
-
   const renderRadioGroups = (field: FieldConfig) => (
     <>
-      <label className="block text-gray-700 text-sm font-bold mb-2">
+      <label className={styling === 'tailwind' ? "block text-gray-700 text-sm font-bold mb-2" : ""}>
         {field.label}
       </label>
       {field.groups?.map((group, index) => (
-        <div key={index} className="mb-4">
-          <div className={`flex ${group.layout === "inline" ? "flex-row" : "flex-col"} gap-4`}>
+        <div key={index} className={styling === 'tailwind' ? "mb-4" : ""}>
+          <div className={`flex ${styling === 'tailwind' && group.layout === "inline" ? "flex-row gap-4" : "flex-col gap-4"}`}>
             {group.options.map((option, idx) => (
-              <label key={idx} className="text-gray-700 text-sm">
+              <label key={idx} className={styling === 'tailwind' ? "text-gray-700 text-sm" : ""}>
                 <input
                   type="radio"
                   name={field.name}
                   value={option}
                   checked={formData[field.name] === option}
                   onChange={handleChange}
-                  className="mr-2"
+                  className={styling === 'tailwind' ? "mr-2" : ""}
                 />
                 {option}
               </label>
             ))}
           </div>
           {errors[field.name] && (
-            <p className="text-red-500 text-xs italic">{errors[field.name]}</p>
+            <p className={styling === 'tailwind' ? "text-red-500 text-xs italic" : ""}>{errors[field.name]}</p>
           )}
         </div>
       ))}
@@ -117,38 +117,42 @@ const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
   };
 
   return (
-    <div className="w-full max-w-xs mx-auto">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
-        <h2 className="text-lg font-semibold text-center mb-4">{config.formName}</h2>
+    <div className={styling === 'tailwind' ? "w-full max-w-xs mx-auto" : ""}>
+      <form className={styling === 'tailwind' ? "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" : ""} onSubmit={handleSubmit}>
+        <h2 className={styling === 'tailwind' ? "text-lg font-semibold text-center mb-4" : ""}>{config.formName}</h2>
         {config.fields.map((field, index) => (
-          <div key={index} className="mb-4">
+          <div key={index} className={styling === 'tailwind' ? "mb-4" : ""}>
             {field.type === "radio" ? (
               renderRadioGroups(field)
             ) : (
               <>
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={field.name}>
+                <label className={styling === 'tailwind' ? "block text-gray-700 text-sm font-bold mb-2" : ""} htmlFor={field.name}>
                   {field.label}
                 </label>
                 <input
-                  className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors[field.name] ? 'border-red-500' : ''}`}
+                  className={
+                    styling === 'tailwind'
+                      ? `shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors[field.name] ? 'border-red-500' : ''}`
+                      : ""
+                  }
                   type={field.type}
                   id={field.name}
                   name={field.name}
                   required={field.required}
                   placeholder={field.placeholder || ""}
-                  value={formData[field.name] || ""}
+                  value={String(formData[field.name] || "")}
                   onChange={handleChange}
                 />
                 {errors[field.name] && (
-                  <p className="text-red-500 text-xs italic">{errors[field.name]}</p>
+                  <p className={styling === 'tailwind' ? "text-red-500 text-xs italic" : ""}>{errors[field.name]}</p>
                 )}
               </>
             )}
           </div>
         ))}
-        <div className="flex items-center justify-between">
+        <div className={styling === 'tailwind' ? "flex items-center justify-between" : ""}>
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className={styling === 'tailwind' ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" : ""}
             type="submit"
           >
             Submit
