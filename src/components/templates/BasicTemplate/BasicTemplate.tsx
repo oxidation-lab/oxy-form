@@ -10,14 +10,71 @@ const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
 
+
+
+
   //FORM_CONFIG_HERE
 
 
 
+
+
+
+  const validateField = (field: FieldConfig, value: any) => {
+    const fieldErrors: string[] = [];
+
+    if (field.required && !value) {
+      fieldErrors.push(`${field.label} is required`);
+    }
+
+    if (field.validation?.pattern && !field.validation.pattern.test(value)) {
+      fieldErrors.push(field.validation.customMessage || `${field.label} is invalid`);
+    }
+
+    if (field.validation?.minLength && value.length < field.validation.minLength) {
+      fieldErrors.push(field.validation.customMessage || `${field.label} is too short`);
+    }
+
+    if (field.validation?.maxLength && value.length > field.validation.maxLength) {
+      fieldErrors.push(field.validation.customMessage || `${field.label} is too long`);
+    }
+
+    if (field.type === "number") {
+      if (isNaN(Number(value))) {
+        fieldErrors.push(`${field.label} must be a number`);
+      } else {
+        if (field.validation?.minValue !== undefined && Number(value) < field.validation.minValue) {
+          fieldErrors.push(`${field.label} should be at least ${field.validation.minValue}`);
+        }
+        if (field.validation?.maxValue !== undefined && Number(value) > field.validation.maxValue) {
+          fieldErrors.push(`${field.label} should be at most ${field.validation.maxValue}`);
+        }
+      }
+    }
+
+    return fieldErrors;
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    config.fields.forEach((field) => {
+      const value = formData[field.name] || "";
+      const fieldErrors = validateField(field, value);
+      if (fieldErrors.length > 0) {
+        newErrors[field.name] = fieldErrors.join(" ");
+      }
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: "" });
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
   const renderRadioGroups = (field: FieldConfig) => (
@@ -25,11 +82,10 @@ const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
       <label className="block text-gray-700 text-sm font-bold mb-2">
         {field.label}
       </label>
-      {field.groups?.map((group: any, index: number) => (
+      {field.groups?.map((group, index) => (
         <div key={index} className="mb-4">
-
           <div className={`flex ${group.layout === "inline" ? "flex-row" : "flex-col"} gap-4`}>
-            {group.options.map((option: any, idx: number) => (
+            {group.options.map((option, idx) => (
               <label key={idx} className="text-gray-700 text-sm">
                 <input
                   type="radio"
@@ -53,14 +109,18 @@ const BasicTemplate: React.FC<TemplateProps> = ({ config }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    if (validateForm()) {
+      console.log("Form submitted:", formData);
+    } else {
+      console.log("Validation failed. Check errors.");
+    }
   };
 
   return (
     <div className="w-full max-w-xs mx-auto">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
         <h2 className="text-lg font-semibold text-center mb-4">{config.formName}</h2>
-        {config.fields.map((field: any, index: number) => (
+        {config.fields.map((field, index) => (
           <div key={index} className="mb-4">
             {field.type === "radio" ? (
               renderRadioGroups(field)

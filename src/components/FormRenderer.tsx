@@ -22,6 +22,7 @@ const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
           `@/components/templates/${templateName}/${templateName}.${language === "ts" ? "tsx" : "jsx"}`
         );
         setTemplateComponent(() => module.default as React.FC<TemplateComponentProps>);
+        console.log(`Template "${templateName}.${language === "ts" ? "tsx" : "jsx"}" loaded successfully`);
       } catch (error) {
         console.error(`Error loading template "${templateName}":`, error);
       }
