@@ -9,7 +9,7 @@ interface TemplateComponentProps {
   config: FormConfig;
 }
 
-const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
+export const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
   const { formName, fields, template: templateName } = config;
   const { language, styling } = config.stylingConfig;
 
@@ -22,6 +22,7 @@ const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
           `@/components/templates/${templateName}/${templateName}.${language === "ts" ? "tsx" : "jsx"}`
         );
         setTemplateComponent(() => module.default as React.FC<TemplateComponentProps>);
+        console.log(`Template "${templateName}.${language === "ts" ? "tsx" : "jsx"}" loaded successfully`);
       } catch (error) {
         console.error(`Error loading template "${templateName}":`, error);
       }
@@ -40,9 +41,10 @@ const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
 
   return (
     <div className={`form-container ${styling === "tailwind" ? "tailwind-styles" : ""}`}>
-      <TemplateComponent config={config} />
+      {/* @ts-ignore */}
+      <TemplateComponent config={config} styling={styling} />
     </div>
   );
 };
 
-export default FormRenderer;
+

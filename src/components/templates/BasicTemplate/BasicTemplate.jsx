@@ -56,7 +56,7 @@ const BasicTemplate = ({ config }) => {
   return (
     <div className="w-full max-w-xs mx-auto">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
-        <h2 className="text-lg font-semibold text-center mb-4">{config.formName}</h2>
+        <h2 className="text-lg font-semibold text-center mb-4">{config.formName} JS</h2>
         {config.fields.map((field, index) => (
           <div key={index} className="mb-4">
             {field.type === "radio" ? (

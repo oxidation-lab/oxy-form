@@ -39,7 +39,6 @@ const formConfig: FormConfig = {
       name: "email",
       type: "text",
       label: "Email",
-      required: true,
       placeholder: "Enter your email",
       validation: {
         pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -56,8 +55,7 @@ const formConfig: FormConfig = {
 
 
 const App = () => (
-  <div style={{ padding: "20px" }}>
-    <h1>Form Renderer</h1>
+  <div style={{ padding: "20px", marginTop: "300px" }}>
     <FormRenderer config={formConfig} />
   </div>
 );
