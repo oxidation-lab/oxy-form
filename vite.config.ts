@@ -4,12 +4,22 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   build: {
-    sourcemap: false
+    sourcemap: false, // Disable sourcemap generation
+    rollupOptions: {
+      output: {
+        assetFileNames: assetInfo => {
+          if (assetInfo.name.endsWith('.css')) {
+            return 'assets/[name].[hash][extname]';
+          }
+          return '[name].[hash][extname]';
+        },
+      }
+    }
   },
   root: 'test',
   plugins: [react({
     fastRefresh: false,
-  } as any),],
+  } as any)],
   server: {
     port: 3000,
   },
