@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "declaration": true,     
+    "declarationMap": true, 
+    "emitDeclarationOnly": false,
     "target": "ESNext",
     "module": "ESNext",
     "jsx": "react-jsx",
@@ -14,6 +17,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*", "test/**/*"],
+"include": ["src/**/*", "index.ts", "test/**/*"],
   "exclude": ["node_modules", "dist"] 
 }
