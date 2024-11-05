@@ -1,14 +1,19 @@
 {
-	"name": "oxy-form",
+	"name": "@oxidation-lab/oxy-form",
 	"version": "1.0.0",
+	"description": "A form rendering package",
 	"main": "index.js",
+	"types": "index.d.ts",
 	"scripts": {
+		"build": "tsc",
 		"test:dev": "vite"
 	},
-	"keywords": [],
-	"author": "",
+	"author": "Your Name <your.email@example.com>",
 	"license": "ISC",
-	"description": "",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/oxidation-lab/oxy-form"
+	},
 	"dependencies": {
 		"styled-components": "^6.1.13",
 		"ts-node": "^10.9.2",
@@ -18,10 +23,8 @@
 		"@types/node": "^22.8.6",
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
-		"@vitejs/plugin-react": "^4.3.3",
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
 		"vite": "^5.4.10",
 		"vite-tsconfig-paths": "^5.0.1"
-	}
+	},
+	"files": ["index.js", "index.d.ts"]
 }

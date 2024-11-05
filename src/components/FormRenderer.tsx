@@ -9,7 +9,7 @@ interface TemplateComponentProps {
   config: FormConfig;
 }
 
-const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
+export const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
   const { formName, fields, template: templateName } = config;
   const { language, styling } = config.stylingConfig;
 
@@ -47,4 +47,4 @@ const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
   );
 };
 
-export default FormRenderer;
+
