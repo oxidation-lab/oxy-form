@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "declaration": true,     
-    "declarationMap": false, 
-    "sourceMap": false, 
+    "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,    
     "emitDeclarationOnly": false,
     "target": "ESNext",
     "module": "ESNext",
     "jsx": "react-jsx",
+    "allowJs": true,
     "moduleResolution": "node",
     "outDir": "./dist", 
     "esModuleInterop": true,
@@ -18,6 +19,6 @@
       "@/*": ["src/*"]
     }
   },
-"include": ["src/**/*", "index.ts", "test/**/*"],
+  "include": ["src/**/*", "index.ts", "src/components/templates/**/*"],
   "exclude": ["node_modules", "dist"] 
 }

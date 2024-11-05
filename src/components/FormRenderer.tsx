@@ -19,10 +19,10 @@ export const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
     const loadTemplate = async () => {
       try {
         const module = await import(
-          `./templates/${templateName}/${templateName}.${language === "ts" ? "tsx" : "jsx"}`
+          `./templates/${templateName}/${templateName}.js`
         );
         setTemplateComponent(() => module.default as React.FC<TemplateComponentProps>);
-        console.log(`Template "${templateName}.${language === "ts" ? "tsx" : "jsx"}" loaded successfully`);
+        console.log(`Template "${templateName}" loaded successfully!`);
       } catch (error) {
         console.error(`Error loading template "${templateName}":`, error);
       }

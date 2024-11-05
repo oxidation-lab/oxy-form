@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   build: {
-    sourcemap: false, // Disable sourcemap generation
+    sourcemap: false,
     rollupOptions: {
       output: {
         assetFileNames: assetInfo => {
@@ -17,9 +17,7 @@ export default defineConfig({
     }
   },
   root: 'test',
-  plugins: [react({
-    fastRefresh: false,
-  } as any)],
+  plugins: [react()],
   server: {
     port: 3000,
   },
