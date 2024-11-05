@@ -3,6 +3,9 @@ import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  build: {
+    sourcemap: false
+  },
   root: 'test',
   plugins: [react({
     fastRefresh: false,

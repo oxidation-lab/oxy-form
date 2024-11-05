@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 // @ts-ignore
-import FormRenderer from "../src/components/FormRenderer";
+import { FormRenderer } from "../src/components/FormRenderer";
 import { FormConfig } from "../src/types/form.types";
 
 const formConfig: FormConfig = {
