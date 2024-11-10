@@ -1,4 +1,4 @@
-const regexPatterns = {
+export const regexPatterns = {
   email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
 
   username: (minLength = 3, maxLength = 16) =>
@@ -44,4 +44,3 @@ const regexPatterns = {
   },
 };
 
-export default regexPatterns;
