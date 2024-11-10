@@ -17,7 +17,9 @@ export default defineConfig({
     }
   },
   root: 'test',
-  plugins: [react()],
+  plugins: [react({
+    fastRefresh: false,
+  } as any)],
   server: {
     port: 3000,
   },

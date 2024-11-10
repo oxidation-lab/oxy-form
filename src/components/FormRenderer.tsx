@@ -11,7 +11,6 @@ interface TemplateComponentProps {
 
 export const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
   const { formName, fields, template: templateName } = config;
-  const { language, styling } = config.stylingConfig;
 
   const [TemplateComponent, setTemplateComponent] = useState<React.FC<TemplateComponentProps> | null>(null);
 
@@ -30,19 +29,14 @@ export const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
 
     loadTemplate();
 
-    if (styling === "external") {
-      import(`./templates/${templateName}/${templateName}.css`).catch((error) =>
-        console.error("Error loading external CSS:", error)
-      );
-    }
-  }, [templateName, language, styling]);
+  }, [templateName]);
 
   if (!TemplateComponent) return <div>Loading...</div>;
 
   return (
-    <div className={`form-container ${styling === "tailwind" ? "tailwind-styles" : ""}`}>
+    <div className={`form-container`}>
       {/* @ts-ignore */}
-      <TemplateComponent config={config} styling={styling} />
+      <TemplateComponent config={config} />
     </div>
   );
 };
