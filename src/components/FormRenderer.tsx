@@ -18,7 +18,7 @@ export const FormRenderer: React.FC<FormRendererProps> = ({ config }) => {
     const loadTemplate = async () => {
       try {
         const module = await import(
-          `./templates/${templateName}/${templateName}.jsx`
+          `./templates/${templateName}/${templateName}.js`
         );
         setTemplateComponent(() => module.default as React.FC<TemplateComponentProps>);
         console.log(`Template "${templateName}" loaded successfully!`);

@@ -1,6 +1,6 @@
 {
 	"name": "@oxidation-lab/oxy-form",
-	"version": "1.2.3",
+	"version": "1.2.4",
 	"description": "A form rendering package",
 	"main": "dist/index.js",
 	"module": "dist/index.js",
