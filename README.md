@@ -63,10 +63,6 @@ const formConfig = {
       ],
     },
   ],
-  stylingConfig: {
-    language: "js",
-    styling: "external",
-  },
   template: "BasicTemplate",
 };
 
@@ -85,4 +81,43 @@ if (rootElement) {
 ```
 
 
+## 🔏 Validation with Regular Expressions
 
+You can easily integrate regular expression-based validation into your forms. The library supports a wide range of field types such as email, username, password, phone number, and more. Below is how you can use the validation patterns from the regexPatterns module:
+
+### Import Regular Expressions
+
+```jsx
+import { regexPatterns } from '@oxidation-lab/oxy-form';
+```
+
+### Example: Email Validation
+
+You can validate the email field using the predefined regular expression pattern.
+
+```jsx
+{
+  name: "email",
+  type: "email",
+  label: "Email Address",
+  required: true,
+  validation: {
+    pattern: regexPatterns.email, // Using regex for email validation
+  },
+}
+```
+### Example: Username Validation
+
+The username field can have a minimum and maximum length and only allow alphanumeric characters, dashes, and underscores.
+
+```jsx
+{
+  name: "username",
+  type: "text",
+  label: "Username",
+  required: true,
+  validation: {
+    pattern: regexPatterns.username(3, 16), // Min 3, Max 16 characters
+  },
+}
+```
