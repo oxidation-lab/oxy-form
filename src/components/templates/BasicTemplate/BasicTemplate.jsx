@@ -1,13 +1,9 @@
 import { useState } from 'react';
 
 
-
 const BasicTemplate = ({ config }) => {
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
-
-
-  //FORM_CONFIG_HERE
 
 
 

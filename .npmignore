@@ -4,3 +4,7 @@ src/
 test/
 .gitignore
 .DS_Store
+vite.config.ts
+tsconfig.json
+.gitignore
+package-lock.json
